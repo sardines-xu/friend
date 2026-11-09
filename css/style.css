@@ -1,0 +1,493 @@
+:root {
+      --gold: #dfc082;
+      --gold-soft: rgba(223, 192, 130, 0.36);
+      --cream: #fbf8f3;
+    }
+
+    * {
+      box-sizing: border-box;
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-touch-callout: none;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: #060913;
+      color: var(--cream);
+      font-family: 'Cormorant Garamond', serif;
+      touch-action: none;
+    }
+
+    /* Exquisite Multi-Layered Aurora & Starry Cosmos Background */
+    .cosmos-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background:
+        radial-gradient(ellipse 85% 65% at 50% 48%, rgba(28, 38, 68, 0.78) 0%, rgba(11, 15, 30, 0.92) 58%, #05070f 100%);
+      overflow: hidden;
+    }
+
+    .aurora-ribbon {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(78px);
+      opacity: 0.42;
+      pointer-events: none;
+      mix-blend-mode: screen;
+      animation: auroraDrift 18s ease-in-out infinite alternate;
+    }
+
+    .aurora-1 {
+      width: 58vw;
+      height: 42vh;
+      top: 6%;
+      left: 12%;
+      background: radial-gradient(circle, rgba(223, 192, 130, 0.24) 0%, rgba(124, 92, 168, 0.14) 55%, transparent 75%);
+    }
+
+    .aurora-2 {
+      width: 52vw;
+      height: 48vh;
+      bottom: 8%;
+      right: 10%;
+      background: radial-gradient(circle, rgba(94, 138, 212, 0.24) 0%, rgba(212, 158, 132, 0.14) 55%, transparent 75%);
+      animation-delay: -7s;
+    }
+
+    .aurora-3 {
+      width: 38vw;
+      height: 38vw;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: radial-gradient(circle, rgba(223, 192, 130, 0.14) 0%, rgba(56, 82, 135, 0.08) 50%, transparent 72%);
+      animation-delay: -12s;
+    }
+
+    @keyframes auroraDrift {
+      0% { transform: translate3d(-3%, -2%, 0) scale(0.96); }
+      100% { transform: translate3d(3%, 2%, 0) scale(1.06); }
+    }
+
+    /* Subtle Astrolabe Celestial Rings in Background */
+    .celestial-astrolabe {
+      position: fixed;
+      left: 50%;
+      top: 50%;
+      width: min(86vmin, 760px);
+      height: min(86vmin, 760px);
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      z-index: 2;
+      opacity: 0.48;
+      transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    body.detail-open .celestial-astrolabe {
+      opacity: 0.14;
+      transform: translate(-50%, -50%) scale(0.85);
+    }
+
+    .astrolabe-spin-slow {
+      transform-origin: 50% 50%;
+      animation: astrolabeRotate 90s linear infinite;
+    }
+
+    .astrolabe-spin-rev {
+      transform-origin: 50% 50%;
+      animation: astrolabeRotateRev 120s linear infinite;
+    }
+
+    @keyframes astrolabeRotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes astrolabeRotateRev {
+      from { transform: rotate(360deg); }
+      to { transform: rotate(0deg); }
+    }
+
+    /* 3D Ring Orbit Stage */
+    #orbit-stage {
+      position: fixed;
+      inset: 0;
+      z-index: 10;
+      perspective: 1400px;
+      transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+                  filter 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+                  opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: transform, filter, opacity;
+    }
+
+    body.detail-open #orbit-stage {
+      transform: scale(0.82);
+      filter: blur(10px) brightness(0.36);
+      opacity: 0.28;
+      pointer-events: none;
+    }
+
+    /* 4 Elliptical 3D Ring Track Guides (0°, 90°, 45°, -45°) */
+    .ring-guide-wrap {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      pointer-events: none;
+      transform-origin: center center;
+      z-index: 3;
+    }
+
+    .ring-guide-ellipse {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      border: 1px solid rgba(223, 192, 130, 0.16);
+      box-shadow: inset 0 0 24px rgba(223, 192, 130, 0.04), 0 0 18px rgba(223, 192, 130, 0.05);
+      transition: border-color 0.45s ease, box-shadow 0.45s ease;
+    }
+
+    .ring-guide-ellipse.active-ring {
+      border-color: rgba(223, 192, 130, 0.52);
+      box-shadow: inset 0 0 30px rgba(223, 192, 130, 0.14), 0 0 28px rgba(223, 192, 130, 0.25);
+    }
+
+    /* Luminous Center Core */
+    .center-core {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 54px;
+      height: 54px;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      border: 1px solid rgba(223, 192, 130, 0.28);
+      background: radial-gradient(circle, rgba(223, 192, 130, 0.22) 0%, rgba(12, 16, 30, 0.35) 68%, transparent 100%);
+      box-shadow: 0 0 42px rgba(223, 192, 130, 0.25);
+      pointer-events: none;
+      z-index: 95;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .center-core::after {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--gold);
+      box-shadow: 0 0 12px var(--gold);
+    }
+
+    /* Photo Cards on 3D Elliptical Rings */
+    .track-card {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 132px;
+      height: 166px;
+      margin-left: -66px;
+      margin-top: -83px;
+      cursor: pointer;
+      will-change: transform, opacity, filter;
+      transform-style: preserve-3d;
+    }
+
+    @media (max-width: 640px) {
+      .track-card {
+        width: 98px;
+        height: 124px;
+        margin-left: -49px;
+        margin-top: -62px;
+      }
+    }
+
+    .track-card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(155deg, #fdfbf7 0%, #efe8dc 100%);
+      border-radius: 6px;
+      padding: 6px 6px 20px 6px;
+      box-shadow:
+        0 14px 34px rgba(0, 0, 0, 0.65),
+        0 0 0 1px rgba(223, 192, 130, 0.42);
+      transition: transform 0.38s cubic-bezier(0.22, 1, 0.36, 1),
+                  box-shadow 0.38s cubic-bezier(0.22, 1, 0.36, 1);
+      animation: cardBreath 4.6s ease-in-out infinite;
+    }
+
+    @keyframes cardBreath {
+      0%, 100% {
+        transform: translateY(0px) rotate(var(--card-tilt, 0deg));
+      }
+      50% {
+        transform: translateY(-4px) rotate(calc(var(--card-tilt, 0deg) + 1deg));
+      }
+    }
+
+    /* Delicate Top Gold Seal Ornament */
+    .track-card-inner::before {
+      content: '';
+      position: absolute;
+      top: -4px;
+      left: 50%;
+      width: 30px;
+      height: 8px;
+      transform: translateX(-50%) rotate(-1deg);
+      background: linear-gradient(135deg, rgba(232, 204, 146, 0.9), rgba(188, 152, 88, 0.78));
+      border-radius: 2px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.28);
+      z-index: 4;
+      pointer-events: none;
+    }
+
+    /* Hairline Inner Gold Frame */
+    .track-card-inner::after {
+      content: '';
+      position: absolute;
+      inset: 3.5px;
+      border: 1px solid rgba(186, 150, 88, 0.34);
+      border-radius: 3px;
+      pointer-events: none;
+      z-index: 3;
+    }
+
+    /* Playful & Elegant Hover / Focus Effect */
+    .track-card:hover .track-card-inner,
+    .track-card.focused-card .track-card-inner {
+      animation-play-state: paused;
+      transform: translateY(-10px) scale(1.16) rotate(0deg);
+      box-shadow:
+        0 24px 52px rgba(0, 0, 0, 0.82),
+        0 0 28px rgba(223, 192, 130, 0.62),
+        0 0 0 1.5px rgba(223, 192, 130, 0.95);
+    }
+
+    .card-photo-wrap {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      border-radius: 3px;
+      background: #141929;
+    }
+
+    .card-photo-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+      pointer-events: none;
+    }
+
+    .track-card:hover .card-photo-wrap img {
+      transform: scale(1.09);
+    }
+
+    .card-shimmer {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, transparent 25%, rgba(255, 255, 255, 0.45) 50%, transparent 75%);
+      transform: translateX(-125%);
+      transition: transform 0.65s ease;
+      pointer-events: none;
+    }
+
+    .track-card:hover .card-shimmer {
+      transform: translateX(125%);
+    }
+
+    /* Corner Photo Mounts */
+    .corner-ornament {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      border-color: #b59050;
+      pointer-events: none;
+      z-index: 4;
+      opacity: 0.78;
+    }
+    .corner-tl { top: 5px; left: 5px; border-top: 1.5px solid; border-left: 1.5px solid; }
+    .corner-tr { top: 5px; right: 5px; border-top: 1.5px solid; border-right: 1.5px solid; }
+    .corner-bl { bottom: 18px; left: 5px; border-bottom: 1.5px solid; border-left: 1.5px solid; }
+    .corner-br { bottom: 18px; right: 5px; border-bottom: 1.5px solid; border-right: 1.5px solid; }
+
+    .card-caption-tiny {
+      position: absolute;
+      bottom: 3px;
+      left: 8px;
+      right: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 10.5px;
+      color: #5b4d38;
+      letter-spacing: 0.06em;
+    }
+
+    /* Single Photo Detail Overlay */
+    #detail-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+      background: radial-gradient(circle at center, rgba(10, 14, 26, 0.52) 0%, rgba(4, 6, 12, 0.86) 100%);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+    }
+
+    body.detail-open #detail-overlay {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* Exquisite Frame */
+    #exquisite-frame {
+      position: relative;
+      width: min(86vw, 470px);
+      background: linear-gradient(145deg, #fcfaf6 0%, #f0e9dc 100%);
+      border-radius: 10px;
+      padding: 20px 20px 26px 20px;
+      box-shadow:
+        0 32px 85px rgba(0, 0, 0, 0.85),
+        0 0 0 1px rgba(223, 192, 130, 0.72),
+        0 0 54px rgba(223, 192, 130, 0.22);
+      transform-origin: center center;
+      will-change: transform, opacity;
+      cursor: grab;
+    }
+
+    #exquisite-frame:active {
+      cursor: grabbing;
+    }
+
+    @media (max-width: 640px) {
+      #exquisite-frame {
+        width: min(88vw, 360px);
+        padding: 15px 15px 22px 15px;
+      }
+    }
+
+    .frame-gold-border {
+      position: absolute;
+      inset: 8px;
+      border: 1px solid rgba(186, 148, 82, 0.52);
+      border-radius: 6px;
+      pointer-events: none;
+    }
+
+    .frame-gold-border::after {
+      content: '';
+      position: absolute;
+      inset: 3px;
+      border: 1px solid rgba(186, 148, 82, 0.24);
+      border-radius: 4px;
+    }
+
+    /* Corner Filigree Ornaments */
+    .frame-filigree {
+      position: absolute;
+      width: 24px;
+      height: 24px;
+      color: #b08946;
+      pointer-events: none;
+      z-index: 5;
+    }
+    .filigree-tl { top: 10px; left: 10px; }
+    .filigree-tr { top: 10px; right: 10px; transform: scaleX(-1); }
+    .filigree-bl { bottom: 10px; left: 10px; transform: scaleY(-1); }
+    .filigree-br { bottom: 10px; right: 10px; transform: scale(-1, -1); }
+
+    #detail-photo-viewport {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 4 / 4.35;
+      max-height: 60vh;
+      background: #121622;
+      border-radius: 4px;
+      overflow: hidden;
+      box-shadow: inset 0 2px 12px rgba(0, 0, 0, 0.38);
+    }
+
+    .detail-slide-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      will-change: transform, opacity;
+      pointer-events: none;
+    }
+
+    /* Friend Fovever Plaque Below Frame */
+    .signature-plaque {
+      margin-top: 18px;
+      text-align: center;
+      position: relative;
+      padding-top: 4px;
+    }
+
+    .signature-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+
+    .signature-divider span {
+      height: 1px;
+      width: 52px;
+      background: linear-gradient(90deg, transparent, #b89149, transparent);
+    }
+
+    .friend-forever-title {
+      font-family: 'Cormorant Garamond', 'Cinzel', Georgia, serif;
+      font-style: italic;
+      font-weight: 600;
+      font-size: clamp(1.6rem, 4.2vw, 2.15rem);
+      color: #2b2317;
+      letter-spacing: 0.08em;
+      line-height: 1.15;
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.85);
+    }
+
+    /* Minimalist Floating Music Button */
+    @keyframes spinVinyl {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .vinyl-spinning {
+      animation: spinVinyl 8.5s linear infinite;
+    }
+
+    .minimal-icon-btn {
+      background: rgba(14, 19, 34, 0.58);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(223, 192, 130, 0.32);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+      transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .minimal-icon-btn:hover {
+      transform: scale(1.08);
+      border-color: rgba(223, 192, 130, 0.78);
+      box-shadow: 0 0 20px rgba(223, 192, 130, 0.28);
+    }

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Friend Forever</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <!-- Multi-Layered Starry & Aurora Ambient Background -->
+  <div class="cosmos-backdrop">
+    <div class="aurora-ribbon aurora-1"></div>
+    <div class="aurora-ribbon aurora-2"></div>
+    <div class="aurora-ribbon aurora-3"></div>
+  </div>
+
+  <!-- Delicate Astrolabe Geometry Overlay -->
+  <svg class="celestial-astrolabe" viewBox="0 0 600 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g class="astrolabe-spin-slow">
+      <circle cx="300" cy="300" r="286" stroke="rgba(223, 192, 130, 0.14)" stroke-width="0.8" stroke-dasharray="3 7" />
+      <circle cx="300" cy="300" r="236" stroke="rgba(223, 192, 130, 0.1)" stroke-width="0.7" />
+      <path d="M300 8 L300 592 M8 300 L592 300" stroke="rgba(223, 192, 130, 0.06)" stroke-width="0.6" />
+    </g>
+    <g class="astrolabe-spin-rev">
+      <circle cx="300" cy="300" r="172" stroke="rgba(223, 192, 130, 0.12)" stroke-width="0.7" stroke-dasharray="1 6" />
+      <rect x="160" y="160" width="280" height="280" stroke="rgba(223, 192, 130, 0.05)" stroke-width="0.6" transform="rotate(45 300 300)" />
+    </g>
+  </svg>
+
+  <!-- Starlight & Floating Gold Bokeh Particles Canvas -->
+  <canvas id="starlight-canvas" class="fixed inset-0 pointer-events-none z-[4]"></canvas>
+
+  <!-- Background Music: tries local GitHub repo assets/bgm.mp3 first, falls back to embedded audio -->
+  <audio id="bg-music" src="assets/bgm.mp3" loop preload="auto"></audio>
+
+  <!-- Ultra-Clean Top Bar: Subtle Monogram & Vinyl Music Disc Only -->
+  <div class="fixed top-5 left-6 right-6 z-40 flex items-center justify-between pointer-events-none">
+    <div class="pointer-events-auto flex items-center gap-2.5 opacity-80 hover:opacity-100 transition">
+      <span class="text-[#dfc082] text-sm">✦</span>
+      <span class="tracking-[0.28em] text-xs sm:text-sm text-[#f5efe4]/90 uppercase" style="font-family: 'Cinzel', serif;">
+        Friend Forever
+      </span>
+    </div>
+
+    <button id="music-toggle-btn" type="button" aria-label="Toggle Music" class="pointer-events-auto minimal-icon-btn w-10 h-10 rounded-full flex items-center justify-center cursor-pointer">
+      <div id="music-disc" class="w-6 h-6 rounded-full bg-gradient-to-tr from-[#1e1912] via-[#dfc082] to-[#1e1912] flex items-center justify-center vinyl-spinning">
+        <div class="w-2 h-2 rounded-full bg-[#060913]"></div>
+      </div>
+    </button>
+  </div>
+
+  <!-- 3D Ring Orbit Stage (4 Intersecting Rings: 0°, 90°, +45°, -45°) -->
+  <main id="orbit-stage">
+    <div id="ring-guide-0" class="ring-guide-wrap"><div class="ring-guide-ellipse"></div></div>
+    <div id="ring-guide-1" class="ring-guide-wrap"><div class="ring-guide-ellipse"></div></div>
+    <div id="ring-guide-2" class="ring-guide-wrap"><div class="ring-guide-ellipse"></div></div>
+    <div id="ring-guide-3" class="ring-guide-wrap"><div class="ring-guide-ellipse"></div></div>
+
+    <div class="center-core"></div>
+
+    <div id="cards-container" class="relative w-full h-full"></div>
+  </main>
+
+  <!-- Single Photo Pop-out View with Exquisite Frame -->
+  <section id="detail-overlay" aria-hidden="true">
+    <div id="exquisite-frame">
+      <div class="frame-gold-border"></div>
+
+      <!-- 4 Corner Filigree Ornaments -->
+      <svg class="frame-filigree filigree-tl" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M2 20V4a2 2 0 012-2h16M6 14V6h8" stroke-linecap="round"/>
+      </svg>
+      <svg class="frame-filigree filigree-tr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M2 20V4a2 2 0 012-2h16M6 14V6h8" stroke-linecap="round"/>
+      </svg>
+      <svg class="frame-filigree filigree-bl" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M2 20V4a2 2 0 012-2h16M6 14V6h8" stroke-linecap="round"/>
+      </svg>
+      <svg class="frame-filigree filigree-br" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M2 20V4a2 2 0 012-2h16M6 14V6h8" stroke-linecap="round"/>
+      </svg>
+
+      <!-- Photo Viewport -->
+      <div id="detail-photo-viewport">
+        <img id="detail-img-current" class="detail-slide-img" src="" alt="Friend Forever" />
+      </div>
+
+      <!-- Signature Friend Fovever Plaque -->
+      <div class="signature-plaque">
+        <div class="signature-divider">
+          <span></span>
+          <svg class="w-3.5 h-3.5 text-[#b89149]" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2L14.8 8.8L22 9.5L16.5 14.2L18.2 21.2L12 17.4L5.8 21.2L7.5 14.2L2 9.5L9.2 8.8L12 2Z"/>
+          </svg>
+          <span></span>
+        </div>
+        <div class="friend-forever-title">Friend Fovever</div>
+      </div>
+    </div>
+  </section>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
